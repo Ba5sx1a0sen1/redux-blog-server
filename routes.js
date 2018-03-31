@@ -1,4 +1,12 @@
 var User = require('./models/user')//引入User的Model，要通过接口进行对数据库的操作，如增删改查
+var jwt = require('jsonwebtoken')
+var secret = require('./config').secret
+
+var generateToken = function(user){
+    return jwt.sign(user,secret,{
+        expiresIn:3000
+    })
+}
 
 module.exports = function(app){
     app.post('/auth/login',function(req,res){//mongoose查询接口
@@ -12,7 +20,8 @@ module.exports = function(app){
 
                 if(!isMatch){return res.status(403).json({error:'密码错误'})}
                 return res.json({
-                    user:{name:user.username}
+                    user:{name:user.username},
+                    token:generateToken({name:user.username})
                 })
             })
         })
