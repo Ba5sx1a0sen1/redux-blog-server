@@ -22,5 +22,12 @@ UserSchema.pre('save',function(next){//save的前置钩子
     })
 })
 
+UserSchema.methods.comparePassword = function(password,callback){
+    bcrypt.compare(password,this.password,(err,isMatch)=>{
+        if(err){return callback(err)}
+        callback(null,isMatch)
+    })
+}
+
 module.exports = mongoose.model('User',UserSchema)//导出User的model
 //转变为users collection users集合
