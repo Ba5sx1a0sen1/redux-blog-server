@@ -22,8 +22,8 @@ UserSchema.pre('save',function(next){//save的前置钩子
     })
 })
 
-UserSchema.methods.comparePassword = function(password,callback){
-    bcrypt.compare(password,this.password,(err,isMatch)=>{
+UserSchema.methods.comparePassword = function(password,callback){//第一个密码是客户端发送的密码
+    bcrypt.compare(password,this.password,(err,isMatch)=>{//第一个密码是客户端发送的密码，第二个是加密后的密码，由bcrypt进行比较
         if(err){return callback(err)}
         callback(null,isMatch)
     })
