@@ -1,4 +1,5 @@
 var User = require('./models/user')//引入User的Model，要通过接口进行对数据库的操作，如增删改查
+var Post = require('./models/post')
 var jwt = require('jsonwebtoken')
 var secret = require('./config').secret
 
@@ -39,4 +40,18 @@ module.exports = function (app) {
             })
         })
     })
+
+    app.post('/posts',function(req,res){
+        var post = new Post()
+        console.log(req.body)
+        post.name = req.body.name
+        post.content = req.body.content
+        post.save(function(err){
+            if(err) return console.log(err)
+            res.json({
+                message:'文章创建成功'
+            })
+        })
+    })
+
 }
