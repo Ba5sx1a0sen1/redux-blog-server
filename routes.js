@@ -9,6 +9,31 @@ var generateToken = function (user) {
     })
 }
 
+var requireAuth = function(req,res,next){//自己编写管理员验证中间件
+    var token = req.headers.authorization
+    if(token){
+        jwt.verify(token,secret,function(err,decoded){
+            if(err){
+                if(err.name === 'TokenExpiredError'){
+                    return res.status(401).json({error:'认证码失效,请重新登录!'})
+                }else{
+                    return res.status(401).json({error:'认证失败!'})
+                }
+            }else{
+                if(decoded.admin === true){
+                    next()//执行下一步操作(中间件)
+                }else{
+                    res.status(401).json({error:'认证失败!您不是管理员!'})
+                }
+            }
+        })
+    }else{
+        return res.status(403).json({
+            error:'请提供认证码!'
+        })
+    }
+}
+
 module.exports = function (app) {
     app.post(`/auth/login`, function (req, res) {//mongoose查询接口
         User.findOne({ username: req.body.username }, (err, user) => {//只查询一个
@@ -41,7 +66,7 @@ module.exports = function (app) {
         })
     })
 
-    app.post('/posts',function(req,res){
+    app.post('/posts',requireAuth,function(req,res){
         var post = new Post()
         console.log(req.body)
         post.name = req.body.name
@@ -53,5 +78,6 @@ module.exports = function (app) {
             })
         })
     })
+    
 
 }
