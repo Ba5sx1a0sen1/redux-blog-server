@@ -20,8 +20,8 @@ module.exports = function (app) {
 
                 if (!isMatch) { return res.status(403).json({ error: '密码错误' }) }
                 return res.json({
-                    user: { name: user.username },
-                    token: generateToken({ name: user.username })
+                    user: { name: user.username,admin:user.admin  },
+                    token: generateToken({ name: user.username,admin:user.admin })
                 })
             })
         })
@@ -34,7 +34,7 @@ module.exports = function (app) {
         user.save(function (err) {
             if (err) { return console.log(err) }
             return res.json({
-                user: { name: user.username },
+                user: { name: user.username},
                 token: generateToken({ name: user.username })
             })
         })

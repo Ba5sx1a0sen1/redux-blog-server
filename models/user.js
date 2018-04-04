@@ -1,11 +1,12 @@
 var mongoose = require('mongoose')
 var bcrypt = require('bcrypt')
 
-var Schema = mongoose.Schema
+var Schema = mongoose.Schema//moogse的api
 
-var UserSchema = new Schema({
+var UserSchema = new Schema({//定义好存取用户的结构
     username:{type:String,unique:true,required:true},
-    password:{type:String,required:true}
+    password:{type:String,required:true},
+    admin:{type:Boolean,default:false}
 },{
     timestamps:true//添加创建时间与修改时间，由mongoose辅助创建
 })
