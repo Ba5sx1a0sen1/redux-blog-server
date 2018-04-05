@@ -74,6 +74,7 @@ module.exports = function (app) {
         post.save(function(err){
             if(err) return console.log(err)
             res.json({
+                post:post,
                 message:'文章创建成功'
             })
         })
