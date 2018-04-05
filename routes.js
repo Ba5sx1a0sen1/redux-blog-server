@@ -95,5 +95,10 @@ module.exports = function (app) {
         })
     })
     
-
+    app.get('/posts/:post_id',function(req,res){
+        Post.findById({_id:req.params.post_id},function(err,post){
+            if(err) return res.status(422).json({error:err.message})
+            res.json({post:post})
+        })
+    })
 }
