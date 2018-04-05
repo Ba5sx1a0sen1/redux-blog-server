@@ -2,7 +2,7 @@ var express = require('express')
 var mongoose = require('mongoose')
 var bodyParser = require('body-parser')
 var morgan = require('morgan')
-
+var path = require('path')
 var app = express()//创建express实例应用
 var port = require('./config').port//服务端口地址
 var uri = require('./config').uri//数据库地址
@@ -11,6 +11,7 @@ var routes = require('./routes')
 
 //使用morgan中间件，body-parser中间件，设置CORS响应头
 app.use(morgan('dev'))
+app.use(express.static(path.join(__dirname,'public')))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(function (req, res, next) {
