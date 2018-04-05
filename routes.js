@@ -79,6 +79,16 @@ module.exports = function (app) {
             })
         })
     })
+
+    app.get('/posts',function(req,res){
+        Post.find({},'name',function(err,posts){
+            if(err) return console.log(err)
+            res.json({
+                posts:posts,
+                message:'获取所有文章成功'
+            })
+        })
+    })
     
 
 }
