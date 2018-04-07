@@ -1,5 +1,5 @@
 # REDUX博客的后端应用,包括API
-## 对应前端的地址为[redux-client]
+## 对应前端的地址为[redux-client](https://github.com/Ba5sx1a0sen1/redux-blog-client)
 ***
 ## 技术栈:
 1. 数据库采用mgongodb,操作数据库采用mongoose
